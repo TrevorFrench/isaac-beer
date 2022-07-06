@@ -1,4 +1,3 @@
-const csvtojson = require("csvtojson")
 //------------------------------------------------------------------------------
 //---------------------------INITIALIZE DB CONNECTION---------------------------
 //------------------------------------------------------------------------------
@@ -13,37 +12,26 @@ const pool = new Pool({
 })
 
 //------------------------------------------------------------------------------
-//--------------------------INSERT INTO STATISTICS TABLE------------------------
+//----------------------------CREATES STATISTICS TABLE--------------------------
 //------------------------------------------------------------------------------
-const insert_into_statistics_table = (req, res) => {
-  csvData = req.files.csvfile.data.toString('utf8');
-  caseName = req.body.caseName;
-  exchange = req.body.exchange;
-  console.log(exchange)
-  return csvtojson().fromString(csvData).then(json => 
-  {
-    const sql = "\
-    INSERT INTO statistics (\
-      case_name\
-      , exchange\
-      , transaction_count\
-      )\
-    VALUES ('" + caseName + "'\
-    , '" + exchange + "'\
-    , " + json.length + ");";
-    console.log(sql)
-    pool.query(sql, (error, results) => {
-      if (error) {
-        throw error
-      }
-      res.status(200).json(results.rows);
-    });
-  })
+const create_statistics_table = (req, res) => {
+  const sql = "\
+    CREATE TABLE statistics (\
+      case_name varchar,\
+      exchange varchar,\
+      transaction_count int\
+    );";
+  pool.query(sql, (error, results) => {
+    if (error) {
+      throw error
+    }
+    res.status(200).json(results.rows);
+  });
 }
 
 //------------------------------------------------------------------------------
 //--------------------------------EXPORT MODULES--------------------------------
 //------------------------------------------------------------------------------
 module.exports = {
-    insert_into_statistics_table
+    create_statistics_table
   }

@@ -22,6 +22,7 @@ let csvData = "test";
 app.use(upload());
 
 const actions = require('./actions')                                    			// reference queries.js to interact with postgreSQL database
+const admin = require('./admin')                                    			// reference queries.js to interact with postgreSQL database
 // var passport = require('passport');												// login framework
 // var Strategy = require('passport-local').Strategy;								// method which is used within the login framework
 // var db = require('./db');														// folder which contains database files
@@ -57,17 +58,11 @@ app.get('/', 																	// when the root directory loads, send the landing
 	);
 
 app.post("/upload_csv", (req, res) => {
-        // csvData = req.files.csvfile.data.toString('utf8');
-        // caseName = req.body.caseName;
-        // exchange = req.body.exchange;
-        // return csvtojson().fromString(csvData).then(json => 
-        // {return res.status(201).json({csv:csvData, json:json, length:json.length, caseName:caseName, exchange:exchange})})
-
         actions.insert_into_statistics_table(req, res)
     });
 
 app.post('/admin', 														        // admin button
-    actions.create_statistics_table
+    admin.create_statistics_table
 )
 
 //------------------------------------------------------------------------------
