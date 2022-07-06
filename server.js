@@ -1,3 +1,5 @@
+/*hacky nonsense because my db connection broke*/
+process.env.NODE_TLS_REJECT_UNAUTHORIZED='0' // Also did this: npm config set strict-ssl=false and added ssl=true to queries.js //should probably be able to fix this now
 //------------------------------------------------------------------------------
 //---------------------------------ACTION LIST----------------------------------
 //------------------------------------------------------------------------------
@@ -55,40 +57,46 @@ app.get('/', 																	// when the root directory loads, send the landing
 	);
 
 app.post("/upload_csv", (req, res) => {
-    /** convert req buffer into csv string , 
-    *   "csvfile" is the name of my file given at name attribute in input tag */
-        csvData = req.files.csvfile.data.toString('utf8');
-        return csvtojson().fromString(csvData).then(json => 
-        {return res.status(201).json({csv:csvData, json:json})})
+        // csvData = req.files.csvfile.data.toString('utf8');
+        // caseName = req.body.caseName;
+        // exchange = req.body.exchange;
+        // return csvtojson().fromString(csvData).then(json => 
+        // {return res.status(201).json({csv:csvData, json:json, length:json.length, caseName:caseName, exchange:exchange})})
+
+        actions.insert_into_statistics_table(req, res)
     });
+
+app.post('/admin', 														        // admin button
+    actions.create_statistics_table
+)
 
 //------------------------------------------------------------------------------
 //---------------------------INITIALIZE DB CONNECTION---------------------------
 //------------------------------------------------------------------------------
-// const Pool = require('pg').Pool
-// const pool = new Pool({
-//   user: 'xdlepbswgkuwsn',
-//   host: 'ec2-54-236-146-234.compute-1.amazonaws.com',
-//   database: 'd216rqdgnn6371',
-//   password: '43fc7fd35e724f6a212661eb4fd3ae514003079f9d3a56a56b2d96eb959dbaeb',
-//   port: 5432,
-//   ssl: true,
-// })
+const Pool = require('pg').Pool
+const pool = new Pool({
+  user: 'uyvcneifzzhcxi',
+  host: 'ec2-52-204-195-41.compute-1.amazonaws.com',
+  database: 'd3r5159cs20r37',
+  password: 'dfdd94016f7e9e472819530f5cc8877af9aaf1f9bfa639d407ce49c56560ccd0',
+  port: 5432,
+  ssl: true,
+})
 
-// var pg = require('pg')
-//   , session = require('express-session')
-//   , pgSession = require('connect-pg-simple')(session);
+var pg = require('pg')
+  , session = require('express-session')
+  , pgSession = require('connect-pg-simple')(session);
 
-// app.use(session({
-// 		  store: new pgSession({
-// 			pool : pool,                										// Connection pool
-// 		  }),
-// 		secret: 'keyboard cat', 
-// 		resave: false, 
-// 		saveUninitialized: true, 
-// 		cookie: { maxAge: 60 * 60 * 1000 }										// 1 hour cookie
-// 	})
-// );
+app.use(session({
+		  store: new pgSession({
+			pool : pool,                										// Connection pool
+		  }),
+		secret: 'keyboard cat', 
+		resave: false, 
+		saveUninitialized: true, 
+		cookie: { maxAge: 60 * 60 * 1000 }										// 1 hour cookie
+	})
+);
 
 //------------------------------------------------------------------------------
 //---------------------------------LOGIN MODULES--------------------------------
