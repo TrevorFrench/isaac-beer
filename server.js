@@ -54,6 +54,10 @@ app.post("/insert_items", (req, res) => {
         actions.insert_into_items_table(req, res)
     });
 
+app.post("/sql_query", (req, res) => {
+	actions.sql_query(req, res)
+});
+
 app.post('/admin', 														        // admin button
     admin.create_items_table
 )

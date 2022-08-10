@@ -12,16 +12,14 @@ const pool = new Pool({
 })
 
 //------------------------------------------------------------------------------
-//--------------------------INSERT INTO ITEMS TABLE------------------------
+//----------------------------INSERT INTO ITEMS TABLE---------------------------
 //------------------------------------------------------------------------------
 const insert_into_items_table = (req, res) => {
-  csvData = req.files.csvfile.data.toString('utf8');
   item_id = req.body.item_id;
   item_name = req.body.item_name;
-  console.log(exchange)
 
   const sql = "\
-  INSERT INTO itemss (\
+  INSERT INTO items (\
     id\
     , name\
     )\
@@ -39,8 +37,25 @@ const insert_into_items_table = (req, res) => {
 }
 
 //------------------------------------------------------------------------------
+//----------------------------INSERT INTO ITEMS TABLE---------------------------
+//------------------------------------------------------------------------------
+const sql_query = (req, res) => {
+  sql = req.body.sql_query;
+
+  console.log(sql)
+  pool.query(sql, (error, results) => {
+    if (error) {
+      throw error
+    }
+    res.status(200).json(results.rows);
+  });
+
+}
+
+//------------------------------------------------------------------------------
 //--------------------------------EXPORT MODULES--------------------------------
 //------------------------------------------------------------------------------
 module.exports = {
-    insert_into_items_table
+    insert_into_items_table,
+    sql_query
   }
