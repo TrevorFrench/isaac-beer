@@ -23,13 +23,6 @@ app.use(upload());
 
 const actions = require('./actions')                                    			// reference queries.js to interact with postgreSQL database
 const admin = require('./admin')                                    			// reference queries.js to interact with postgreSQL database
-// var passport = require('passport');												// login framework
-// var Strategy = require('passport-local').Strategy;								// method which is used within the login framework
-// var db = require('./db');														// folder which contains database files
-// var theme = require('./theme')													// reference the theme.js file which contains theme change references
-// const ip = require("ip")														// ip package for logging a users ip address
-// require('dotenv').config();
-
 
 //------------------------------------------------------------------------------
 //-------------------------------ENVIRONMENT SETUP------------------------------
@@ -57,12 +50,12 @@ app.get('/', 																	// when the root directory loads, send the landing
 		)
 	);
 
-app.post("/upload_csv", (req, res) => {
-        actions.insert_into_statistics_table(req, res)
+app.post("/insert_items", (req, res) => {
+        actions.insert_into_items_table(req, res)
     });
 
 app.post('/admin', 														        // admin button
-    admin.create_statistics_table
+    admin.create_items_table
 )
 
 //------------------------------------------------------------------------------
@@ -70,12 +63,12 @@ app.post('/admin', 														        // admin button
 //------------------------------------------------------------------------------
 const Pool = require('pg').Pool
 const pool = new Pool({
-  user: 'uyvcneifzzhcxi',
-  host: 'ec2-52-204-195-41.compute-1.amazonaws.com',
-  database: 'd3r5159cs20r37',
-  password: 'dfdd94016f7e9e472819530f5cc8877af9aaf1f9bfa639d407ce49c56560ccd0',
-  port: 5432,
-  ssl: true,
+	user: 'ogljtmsfsccehp',
+	host: 'ec2-44-208-88-195.compute-1.amazonaws.com',
+	database: 'd4c18r3meh2uhu',
+	password: '66ee89ea6005539c144cf6e141e27a30776a2c2f1456dadbbd9f3a5591490b80',
+	port: 5432,
+	ssl: true,
 })
 
 var pg = require('pg')
@@ -92,31 +85,3 @@ app.use(session({
 		cookie: { maxAge: 60 * 60 * 1000 }										// 1 hour cookie
 	})
 );
-
-//------------------------------------------------------------------------------
-//---------------------------------LOGIN MODULES--------------------------------
-//------------------------------------------------------------------------------
-// passport.use(new Strategy(														// Configure the local strategy for use by Passport.
-// 	function(username, password, cb) {								
-// 	  db.users.findByUsername(username, function(err, user) {					// The local strategy require a `verify` function which receives the credentials
-// 	    if (err) { return cb(err); }											// (`username` and `password`) submitted by the user.  The function must verify
-// 		if (!user) { return cb(null, false); }									// that the password is correct and then invoke `cb` with a user object, which
-// 		if (user.password != password) { return cb(null, false); }				// will be set at `req.user` in route handlers after authentication.
-// 		return cb(null, user);
-// 	  });
-// 	}
-// ));
-
-// passport.serializeUser(function(user, cb) {										// Configure Passport authenticated session persistence.
-// 	cb(null, user.id);															// In order to restore authentication state across HTTP requests, Passport needs
-// });																				// to serialize users into and deserialize users out of the session.  The
-
-// passport.deserializeUser(function(id, cb) {										// typical implementation of this is as simple as supplying the user ID when
-// 	db.users.findById(id, function (err, user) {								// serializing, and querying the user record by ID from the database when
-// 		if (err) { return cb(err); }											// deserializing.
-// 		cb(null, user);
-// 	});
-// });
-
-// app.use(passport.initialize());													// Initialize Passport and restore authentication state, if any, from the session
-// app.use(passport.session());

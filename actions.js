@@ -1,49 +1,46 @@
-const csvtojson = require("csvtojson")
 //------------------------------------------------------------------------------
 //---------------------------INITIALIZE DB CONNECTION---------------------------
 //------------------------------------------------------------------------------
 const Pool = require('pg').Pool
 const pool = new Pool({
-  user: 'uyvcneifzzhcxi',
-  host: 'ec2-52-204-195-41.compute-1.amazonaws.com',
-  database: 'd3r5159cs20r37',
-  password: 'dfdd94016f7e9e472819530f5cc8877af9aaf1f9bfa639d407ce49c56560ccd0',
+  user: 'ogljtmsfsccehp',
+  host: 'ec2-44-208-88-195.compute-1.amazonaws.com',
+  database: 'd4c18r3meh2uhu',
+  password: '66ee89ea6005539c144cf6e141e27a30776a2c2f1456dadbbd9f3a5591490b80',
   port: 5432,
   ssl: true,
 })
 
 //------------------------------------------------------------------------------
-//--------------------------INSERT INTO STATISTICS TABLE------------------------
+//--------------------------INSERT INTO ITEMS TABLE------------------------
 //------------------------------------------------------------------------------
-const insert_into_statistics_table = (req, res) => {
+const insert_into_items_table = (req, res) => {
   csvData = req.files.csvfile.data.toString('utf8');
-  caseName = req.body.caseName;
-  exchange = req.body.exchange;
+  item_id = req.body.item_id;
+  item_name = req.body.item_name;
   console.log(exchange)
-  return csvtojson().fromString(csvData).then(json => 
-  {
-    const sql = "\
-    INSERT INTO statistics (\
-      case_name\
-      , exchange\
-      , transaction_count\
-      )\
-    VALUES ('" + caseName + "'\
-    , '" + exchange + "'\
-    , " + json.length + ");";
-    console.log(sql)
-    pool.query(sql, (error, results) => {
-      if (error) {
-        throw error
-      }
-      res.status(200).json(results.rows);
-    });
-  })
+
+  const sql = "\
+  INSERT INTO itemss (\
+    id\
+    , name\
+    )\
+  VALUES ('" + item_id + "'\
+  , '" + item_name + "'\
+  );";
+  console.log(sql)
+  pool.query(sql, (error, results) => {
+    if (error) {
+      throw error
+    }
+    res.status(200).json(results.rows);
+  });
+
 }
 
 //------------------------------------------------------------------------------
 //--------------------------------EXPORT MODULES--------------------------------
 //------------------------------------------------------------------------------
 module.exports = {
-    insert_into_statistics_table
+    insert_into_items_table
   }

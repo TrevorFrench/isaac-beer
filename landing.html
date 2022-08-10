@@ -2,7 +2,7 @@
 <html>
 	<head>
 		<meta charset="UTF-8">
-		<title>Case Statistics</title>
+		<title>Isaac's Beer</title>
 	</head>
 	
 	<body>
@@ -14,11 +14,10 @@
 		</div>
 	
 		<div class="main">
-            <form action="/upload_csv" method="post" enctype="multipart/form-data" class="box login">
-                <input type="text" name="caseName" id="caseName">
-                <input type="text" name="exchange" id="exchange">
-                <input type="file" name="csvfile">
-                <input type="submit" class="" value="Upload" tabindex="1">
+            <form action="/insert_items" method="post" enctype="multipart/form-data" class="box login">
+                <input type="number" name="item_id" id="item_id">
+                <input type="text" name="item_name" id="item_name">
+                <input type="submit" class="" value="Insert" tabindex="1">
             </form>
 
             <form action="/admin" method="post" enctype="multipart/form-data" class="box login">

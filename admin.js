@@ -3,10 +3,10 @@
 //------------------------------------------------------------------------------
 const Pool = require('pg').Pool
 const pool = new Pool({
-  user: 'uyvcneifzzhcxi',
-  host: 'ec2-52-204-195-41.compute-1.amazonaws.com',
-  database: 'd3r5159cs20r37',
-  password: 'dfdd94016f7e9e472819530f5cc8877af9aaf1f9bfa639d407ce49c56560ccd0',
+  user: 'ogljtmsfsccehp',
+  host: 'ec2-44-208-88-195.compute-1.amazonaws.com',
+  database: 'd4c18r3meh2uhu',
+  password: '66ee89ea6005539c144cf6e141e27a30776a2c2f1456dadbbd9f3a5591490b80',
   port: 5432,
   ssl: true,
 })
@@ -14,12 +14,11 @@ const pool = new Pool({
 //------------------------------------------------------------------------------
 //----------------------------CREATES STATISTICS TABLE--------------------------
 //------------------------------------------------------------------------------
-const create_statistics_table = (req, res) => {
+const create_items_table = (req, res) => {
   const sql = "\
-    CREATE TABLE statistics (\
-      case_name varchar,\
-      exchange varchar,\
-      transaction_count int\
+    CREATE TABLE items (\
+      id int,\
+      name varchar\
     );";
   pool.query(sql, (error, results) => {
     if (error) {
@@ -33,5 +32,5 @@ const create_statistics_table = (req, res) => {
 //--------------------------------EXPORT MODULES--------------------------------
 //------------------------------------------------------------------------------
 module.exports = {
-    create_statistics_table
+    create_items_table
   }
