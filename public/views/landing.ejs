@@ -1,0 +1,38 @@
+<!DOCTYPE HTML>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<title>Isaac's Beer</title>
+	</head>
+	
+	<body>
+
+	 <div class="container">
+	
+		<div class="card">
+
+		</div>
+	
+		<div class="main" style="width:50%; height: 100%;">
+            <form action="/insert_items" method="post" enctype="multipart/form-data" class="box login" hidden>
+                <input type="number" name="item_id" id="item_id">
+                <input type="text" name="item_name" id="item_name">
+                <input type="submit" class="" value="Insert" tabindex="1">
+            </form>
+
+            <form action="/admin" method="post" enctype="multipart/form-data" class="box login" hidden>
+                <input type="submit" class="" value="ADMIN" tabindex="1">
+            </form>
+
+			<form action="/sql_query" method="post" enctype="multipart/form-data" class="box login">
+                <input type="text"  style="height: 500px; width: 500px;" name="sql_query" id="sql_query">
+                <input type="submit" class="" value="Query" tabindex="1">
+            </form>
+		</div>
+        <div style="float: right; width: 50%; height: 100%;">
+            <%- query_response %>
+        </div>
+	</div>
+		
+	</body>
+</html>

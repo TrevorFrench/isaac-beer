@@ -47,7 +47,8 @@ const sql_query = (req, res) => {
     if (error) {
       throw error
     }
-    res.status(200).json(results.rows);
+    res.render("landing.ejs", {query_response: JSON.stringify(results.rows)});
+    // res.status(200).json(results.rows);
   });
 
 }
